@@ -6,10 +6,10 @@ class Dashboard extends CI_Controller {
      public function __construct()
     {
         parent::__construct();
-        is_login();
-        $this->load->model('Pengajuan_model');
-        $this->load->model('Lembur_model');
-        $this->load->model('Cuti_model');
+        // is_login();
+        // $this->load->model('Pengajuan_model');
+        // $this->load->model('Lembur_model');
+        // $this->load->model('Cuti_model');
         $this->load->library('form_validation');
     }
 
@@ -59,5 +59,26 @@ class Dashboard extends CI_Controller {
         $this->load->view('dashboard/index', $data);
         $this->load->view('templates/footer');
     }
+
+    function mypdf(){
+         // panggil library yang kita buat sebelumnya yang bernama pdfgenerator
+         $this->load->library('pdfgenerator');
+        
+         // title dari pdf
+         $data['judul'] = 'XDSa';
+         
+         // filename dari pdf ketika didownload
+         $file_pdf = 'laporan_penjualan_toko_kita';
+         // setting paper
+         $paper = 'A4';
+         //orientasi paper potrait / landscape
+         $orientation = "portrait";
+         
+         $html = $this->load->view('laporan_pdf',$data, true);	    
+         
+         // run dompdf
+         $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
+         var_dump("DONE");
+       }
 }
 

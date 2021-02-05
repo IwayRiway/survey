@@ -16,6 +16,7 @@
         <h2 class="section-title"><?=$key?></h2>
 
         <?php foreach ($data[$key] as $key2 => $value2):?>
+        <input type="hidden" name="pertanyaan_id[]" id="<?=$data[$key][$key2][0]['pertanyaan_id']?>" value="<?=$data[$key][$key2][0]['pertanyaan_id']?>">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
@@ -29,7 +30,7 @@
                                 <div class="selectgroup w-100">
                                     <?php $i=0; foreach($data[$key][$key2] as $db):?>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="value<?=$db['pertanyaan_id']?>" value="" class="selectgroup-input">
+                                        <input type="radio" name="value<?=$db['pertanyaan_id']?>" value="<?=$db['id']?>|<?=$db['skor']?>" class="selectgroup-input">
                                         <span class="selectgroup-button"><?=chr($i+65)?></span>
                                     </label>
                                     <?php $i++; endforeach?>
@@ -41,6 +42,18 @@
             </div>
         <?php endforeach?>
         <?php endforeach?>
+        
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-footer text-center">
+                        <button class="btn btn-primary mr-1" type="submit">Simpan</button>
+                        <a href="<?=base_url('shp/survey')?>" class="btn btn-danger">Batal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </form>
     </div>
 
 </section>

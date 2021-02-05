@@ -71,4 +71,26 @@ class Survey extends CI_Controller {
       $this->load->view('survey/kuesioner', $data);
       $this->load->view('templates/footer');
     }
+
+    public function saveKuesioner()
+    {
+      $id = $this->input->post('id');
+
+        $data = $this->Survey_model->saveKuesioner();
+        $this->Survey_model->report($id);
+
+        $this->session->set_flashdata('sukses', 'Data Berhasil Simpan');
+        redirect('shp/survey');
+    }
+
+    public function report()
+    {
+      // GET STORE DATA
+      // $data['store'] = $this->db->query("SELECT a.*, b.* FROM  store_survey a LEFT JOIN store b ON a.store_id = b.id WHERE a.id =$id")->row_array();
+
+      // DATA REPORT
+      $this->Survey_model->report(1);
+
+      var_dump("MAUSK");
+    }
 }
