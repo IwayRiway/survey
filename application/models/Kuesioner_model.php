@@ -21,40 +21,97 @@ class Kuesioner_model extends CI_model
         $kategori_id = $this->input->post('kategori_id');
         $id = $this->input->post('id');
         
-        $insert = [];
+        $insertPilihan = [];
         for ($i=0; $i < count($id); $i++) { 
             $jawaban = $this->input->post("row_$id[$i]_jawaban");
             $skor = $this->input->post("row_$id[$i]_skor");
 
-            $data = [
+            $insert = [
                 'pertanyaan' => $this->input->post("pertanyaan_$id[$i]"),
-                'jawaban' => implode(",",$jawaban),
-                'skor' => implode(",",$skor),
                 'kategori_id' => $kategori_id,
             ];
+            $this->db->insert('kuesioner', $insert);
+            $last_id = $this->db->insert_id();
+            for ($j=0; $j < count($jawaban); $j++) { 
+                $data = [
+                    'jawaban' => $jawaban[$j],
+                    'skor' => $skor[$j],
+                    'pertanyaan_id' => $last_id,
+                ];
+                array_push($insertPilihan, $data);
+            }
 
-            array_push($insert, $data);
         }
-        $this->db->insert_batch('kuesioner', $insert);
+        $this->db->insert_batch('pilihan', $insertPilihan);
     }
 
-    public function getDataById($id)
+    public function getDataByKategori($kategori_id)
     {
-        return $this->db->get_where('kuesioner', ['id'=>$id])->row_array();
+        return $this->db->get_where('kuesioner', ['kategori_id'=>$kategori_id])->result_array();
     }
+
+    public function getPilihan($id)
+    {
+        return $this->db->get_where('pilihan', ['pertanyaan_id'=>$id])->result_array();
+    }
+
+    // public function getDataById($id)
+    // {
+    //     return $this->db->get_where('kuesioner', ['id'=>$id])->row_array();
+    // }
 
     public function update()
     {
-        $data = [
-            'nama' => $this->input->post('nama'),
-        ];
+        if ($this->input->post('tipe')==1){
+            $data = [
+                'pertanyaan' => $this->input->post('pertanyaan'),
+            ];
 
-        $this->db->update('kuesioner', $data, ['id'=>$this->input->post('id')]);
+            $this->db->update('kuesioner', $data, ['id'=>$this->input->post('id')]);
+        } else {
+            $data = [
+                'jawaban' => $this->input->post('jawaban'),
+                'skor' => $this->input->post('skor'),
+            ];
+
+            $this->db->update('pilihan', $data, ['id'=>$this->input->post('id')]);
+        }
+        
+        return 200;
     }
 
-    public function delete($id)
+    public function pilihan()
     {
-        $kuesioner = $this->db->get_where('kuesioner', ['id'=>$id])->row_array();
-        $this->db->delete('kuesioner',['id'=>$id]);
+        if($this->input->post('jawaban')!=null AND $this->input->post('skor')!=null){
+            $data = [
+                'jawaban' => $this->input->post('jawaban'),
+                'skor' => $this->input->post('skor'),
+                'pertanyaan_id' => $this->input->post('id'),
+            ];
+    
+            $this->db->insert('pilihan', $data);
+        }
+        
+        return 200;
+    }
+
+    public function hapusJawaban()
+    {
+        $this->db->delete('pilihan',['id'=>$this->input->post('id')]);
+    }
+
+    public function delete()
+    {
+        $this->db->delete('pilihan',['pertanyaan_id'=>$this->input->post('id')]);
+        $this->db->delete('kuesioner',['id'=>$this->input->post('id')]);
+    }
+
+    public function deleteAll($id)
+    {
+        $pertanyaan = $this->db->get_where('kuesioner',['kategori_id'=>$id])->result_array();
+        foreach ($pertanyaan as $key => $db) {
+            $this->db->delete('pilihan',['pertanyaan_id'=>$db['id']]);
+        }
+        $this->db->delete('kuesioner',['kategori_id'=>$id]);
     }
 }

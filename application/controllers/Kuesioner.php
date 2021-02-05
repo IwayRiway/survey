@@ -40,9 +40,36 @@ class Kuesioner extends CI_Controller {
         redirect('kuesioner');
     }
 
-    public function edit($id)
+    public function detail($kategori_id)
+    {
+        $pertanyaan = $this->Kuesioner_model->getDataByKategori($kategori_id);
+        $raw = [];
+        foreach ($pertanyaan as $key => $db) {
+            $pilihan = $this->Kuesioner_model->getPilihan($db['id']);
+            $raw[$db['pertanyaan']] = $pilihan;
+        }
+
+        $data['data'] = $raw;
+        $data['kategori'] = $this->Kategori_model->getDataById($kategori_id);
+
+        $this->load->view('templates/header');
+        $this->load->view('templates/sidebar');
+        $this->load->view('kuesioner/detail', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function edit($kategori_id)
     { 
-       $data['kuesioner'] = $this->Kuesioner_model->getDataById($id);
+        $pertanyaan = $this->Kuesioner_model->getDataByKategori($kategori_id);
+        $raw = [];
+        foreach ($pertanyaan as $key => $db) {
+            $pilihan = $this->Kuesioner_model->getPilihan($db['id']);
+            $raw[$db['pertanyaan']] = $pilihan;
+        }
+
+        $data['data'] = $raw;
+        $data['id'] = $kategori_id;
+        $data['kategori'] = $this->Kategori_model->getData();
 
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
@@ -53,16 +80,32 @@ class Kuesioner extends CI_Controller {
     
     public function update()
     {   
-        $this->Kuesioner_model->update();
-        $this->session->set_flashdata('info', 'Data Berhasil Diubah');
-        redirect('kuesioner');
+        $data = $this->Kuesioner_model->update();
+        echo json_decode($data);
     }
     
-    public function delete($id)
+    public function pilihan()
     {   
-        $this->Kuesioner_model->delete($id);
+        $data = $this->Kuesioner_model->pilihan();
+        echo json_decode($data);
+    }
+    
+    public function hapusJawaban()
+    {   
+        $this->Kuesioner_model->hapusJawaban();
+        echo json_decode(200);
+    }
+    
+    public function delete()
+    {   
+        $this->Kuesioner_model->delete();
+        echo json_decode(200);
+    }
+
+    public function deleteAll($id)
+    {   
+        $this->Kuesioner_model->deleteAll($id);
         $this->session->set_flashdata('warning', 'Data Berhasil Dihapus');
         redirect('kuesioner');
     }
-
 }

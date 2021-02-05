@@ -3,10 +3,6 @@
 <section class="section">
     <div class="section-header">
     <h1><?=$judul?></h1>
-        <div class="section-header-button">
-            <a href="<?=base_url('kuesioner/create')?>" class="btn btn-primary">Add New</a>
-        </div>
-
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#"><?=$judul?></a></div>
         </div>
@@ -24,13 +20,16 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Kategori</th>
-                                <th>Jumlah Pertanyaan</th>
+                                <th>Store</th>
+                                <th>Alamat</th>
+                                <th>Batas Waktu</th>
+                                <th>Surveyed</th>
+                                <th>Kuesioner</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i=1; foreach($kuesioner as $db):?>
+                            <!-- <?php $i=1; foreach($kuesioner as $db):?>
                                 <tr>
                                     <td><?=$i++?></td>
                                     <td><?=$db['nama']?></td>
@@ -41,11 +40,14 @@
                                         <a href="<?=base_url('kuesioner/deleteAll/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-danger mr-2 tombol-hapus" title="Delete"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
-                            <?php endforeach?>
+                            <?php endforeach?> -->
                         </tbody>
                     </table>
                     </div>
-
+                    
+                    <h6>Keterangan :</h6>
+                    <p><i class="fas fa-stop text-success"></i> Selesai</p>
+                    <p style="margin-top:-20px"><i class="fas fa-stop text-danger"></i> Belum Selesai</p>
                     </div>
                 </div>
             </div>

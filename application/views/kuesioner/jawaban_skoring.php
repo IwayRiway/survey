@@ -1,1 +1,0 @@
-<button class="btn btn-icon btn-outline-danger" type="button" onclick="hapusJawaban('`+params+`_jawaban`+(rowJawaban.length+1)+`')" title="Hapus Jawaban"><i class="fas fa-times"></i></button>
