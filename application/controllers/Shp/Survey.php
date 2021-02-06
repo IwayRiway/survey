@@ -120,15 +120,4 @@ class Survey extends CI_Controller {
       $html = $this->load->view('laporan_pdf',$data, true);	    
       $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
  }
-
-    public function report()
-    {
-      // GET STORE DATA
-      // $data['store'] = $this->db->query("SELECT a.*, b.* FROM  store_survey a LEFT JOIN store b ON a.store_id = b.id WHERE a.id =$id")->row_array();
-
-      // DATA REPORT
-      $this->Survey_model->report(1);
-
-      var_dump("MAUSK");
-    }
 }
