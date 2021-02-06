@@ -32,7 +32,16 @@ function is_login()
 
 function send_mail($data)
 {
-$ci = get_instance();
+   $ci = get_instance();
+
+   // $data['email'] = 'email';
+   // $data['nama'] = 'toko';
+   // $data['region'] = 'region';
+   // $data['manager'] = 'manager';
+   // $data['alamat'] = 'alamat';
+   // $data['tgl_survey'] = 'tgl_survey';
+   // $data['persentase'] = 'persentase';
+   // $data['file'] = 'file';
 
    $config = [
          'protocol' => 'smtp',
@@ -50,39 +59,13 @@ $ci = get_instance();
 
    $ci->email->from('ggalmair@gmail.com', 'My Way Out');
    $ci->email->to($data['email']);
-   $subject = 'Pengajuan ' . $data['tipe'];
+   $subject = 'Laporan Hasil Survey Lapangan';
    $ci->email->subject($subject);
 
    $body = $ci->load->view('templates/email',$data,TRUE);
    $ci->email->message($body);
-   $ci->email->send();
-}
-
-function send_mailKaryawan($data)
-{
-$ci = get_instance();
-
-   $config = [
-         'protocol' => 'smtp',
-         'smtp_host' => 'ssl://smtp.googlemail.com',
-         'smtp_user' => 'ggalmair@gmail.com',
-         'smtp_pass' => 'g1i2a3n4',
-         'smtp_port' => 465,
-         'mailtype' => 'html',
-         'charset' => 'utf-8',
-         'newline' => "\r\n"
-   ];
-
-   $ci->email->initialize($config);
-   $ci->load->library('email', $config);
-
-   $ci->email->from('ggalmair@gmail.com', 'My Way Out');
-   $ci->email->to(implode(', ', $data['email']));
-   $subject = 'Pengajuan Karyawan Baru';
-   $ci->email->subject($subject);
-
-   $body = $ci->load->view('templates/emailKaryawan',$data,TRUE);
-   $ci->email->message($body);
+   $file = base_url('assets/report/') . $data['file'];
+   $this->email->attach($file);
    $ci->email->send();
 }
 

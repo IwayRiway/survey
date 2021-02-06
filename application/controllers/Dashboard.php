@@ -79,6 +79,11 @@ class Dashboard extends CI_Controller {
          // run dompdf
          $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
          var_dump("DONE");
-       }
+    }
+
+    public function tes()
+    {
+        var_dump(date('YmdHis'));
+    }
 }
 

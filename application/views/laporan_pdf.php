@@ -47,15 +47,15 @@
             <table>
                 <tr>
                     <td class='none' style="width:150px">Nama</td>
-                    <td class='none'>: Riway Restu Islami Yudha</td>
+                    <td class='none'>: <?=$nama?></td>
                 </tr>
                 <tr>
                     <td class='none' style="width:150px">Hp</td>
-                    <td class='none'>: 08571191079</td>
+                    <td class='none'>: <?=$hp?></td>
                 </tr>
                 <tr>
                     <td class='none' style="width:150px">Email</td>
-                    <td class='none'>: riway.restu@gmail.com</td>
+                    <td class='none'>: <?=$email?></td>
                 </tr>
             </table>
 
@@ -64,27 +64,27 @@
             <table>
                 <tr>
                     <td class='none' style="width:150px">Nama</td>
-                    <td class='none'>: Toko ABC</td>
+                    <td class='none'>: <?=$toko?></td>
                 </tr>
                 <tr>
                     <td class='none' style="width:150px">Region</td>
-                    <td class='none'>: Jaksel</td>
+                    <td class='none'>: <?=$region?></td>
                 </tr>
                 <tr>
                     <td class='none' style="width:150px">Manager</td>
-                    <td class='none'>: Roby Handoyo</td>
+                    <td class='none'>: <?=$manager?></td>
                 </tr>
                 <tr>
                     <td class='none' style="width:150px">Alamat</td>
-                    <td class='none'>: JL. Teukeu Umar Jakarta Selatan</td>
+                    <td class='none'>: <?=$alamat?></td>
                 </tr>
                 <tr>
                     <td class='none' style="width:150px">Tanggal Survei</td>
-                    <td class='none'>: 2 April 2021</td>
+                    <td class='none'>: <?=$tgl_survey?></td>
                 </tr>
                 <tr>
                     <td class='none' style="width:150px"><b>Pernsentase</b></td>
-                    <td class='none'><b>: 90%</b></td>
+                    <td class='none'><b>: <?=$persentase?> %</b></td>
                 </tr>
             </table>
 
@@ -98,10 +98,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <?php foreach($detail as $db):?>
                         <tr>
-                            <td>Kebersihan</td>
-                            <td>80%</td>
+                            <td><?=$db['nama']?></td>
+                            <td><?=$db['persentase']?> %</td>
                         </tr>
+                        <?php endforeach?>
                     </tbody>
                 </table>
             </div>

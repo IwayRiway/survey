@@ -20,6 +20,8 @@ class Survey_model extends CI_model
     public function save()
     {
         // GET LOT LAIN STORE
+        // $id = id table store_survey
+        // JOIN dengan table store
 
         $meter = $this->_getDistanceBetweenPoints($data[0], $data[1], $this->input->post('latitude'), $this->input->post('longitude'));
 
@@ -41,12 +43,11 @@ class Survey_model extends CI_model
             $data = [
                 'lokasi' => $this->input->post('latitude') . ',' . $this->input->post('longitude'),
                 'surveyed' => 1,
-                'kuesioner' => 0,
                 'poto' => $img,
                 'tanggal_survey' => date('Y-m-d')
             ];
     
-            $this->db->insert('kategori', $data);
+            $this->db->update('store_survey', $data, ['id' => $this->input->post('id')]);
             return 200;
         } else {
             return 400;
@@ -71,6 +72,9 @@ class Survey_model extends CI_model
         }
 
         $this->db->insert_batch('jawaban',$insert);
+
+        $update = ['kuesioner' => 1];
+        $this->db->update('store_survey', $update, ['id' => $this->input->post('id')]);
     }
 
     public function report($id)
@@ -80,18 +84,19 @@ class Survey_model extends CI_model
         $skor = $this->db->query("SELECT SUM(skor) AS skor FROM jawaban WHERE store_survey_id = 1")->row_array();
         
         $data = [
-            'survey_store_id' => $id,
+            'store_survey_id' => $id,
             'skor' => $skor['skor'],
             'total' => $total['total'],
             'persentase' => number_format((($skor['skor'] / $total['total'])*100), 2, ",", ""),
+            'file' => date('YmdHis') . '_Laporan_Survey_Lapangan',
         ];
         $this->db->insert('report', $data);
 
         $last_id = $this->db->insert_id();
-        $this->_reportDetail($last_id);
+        $this->_reportDetail($last_id, $id);
     }
 
-    private function _reportDetail($id){
+    private function _reportDetail($report_id, $store_survey_id){
         
         $jawaban = $this->db->query("SELECT 
                                         a.*, 
@@ -101,7 +106,9 @@ class Survey_model extends CI_model
                                     FROM 
                                         jawaban a 
                                         JOIN pilihan b ON a.pilihan_id = b.id 
-                                        JOIN kuesioner c ON b.pertanyaan_id = c.id 
+                                        JOIN kuesioner c ON b.pertanyaan_id = c.id
+                                    WHERE
+                                        a.id = $store_survey_id 
                                     GROUP BY 
                                         c.kategori_id
                                     ")->result_array();
@@ -129,7 +136,7 @@ class Survey_model extends CI_model
                                         ")->row_array();
             
             $data = [
-                'report_id' => $id,
+                'report_id' => $report_id,
                 'kategori_id' => $db['kategori_id'],
                 'skor' => $db['skor'],
                 'total' => $total['total'],
@@ -139,6 +146,66 @@ class Survey_model extends CI_model
             array_push($insert, $data);
         }
         $this->db->insert_batch('report_detail', $insert);
+    }
+
+    public function getSurvey($id)
+    {
+        //id dari table store_survey
+
+        if($this->session->get('is_spv')==1){
+            return $this->db->query("SELECT 
+                                            a.*, 
+                                            b.nama, 
+                                            b.hp, 
+                                            b.email, 
+                                            c.*,
+                                            d.nama as region  
+                                        FROM 
+                                            store_survey a 
+                                            JOIN spv b ON a.surveyor_id = b.id 
+                                            JOIN store c ON a.store_id = c.id 
+                                            JOIN region d ON c.region_id = d.id
+                                        WHERE
+                                            a.id = $id 
+                                            AND a.surveyed = 1 
+                                            AND a.kuesioner = 1
+                                        ")->row_array();
+        } else {
+            return $this->db->query("SELECT 
+                                        a.*, 
+                                        b.nama, 
+                                        b.hp, 
+                                        b.email, 
+                                        c.*,
+                                        d.nama as region 
+                                    FROM 
+                                        store_survey a 
+                                        JOIN surveyor b ON a.surveyor_id = b.id 
+                                        JOIN store c ON a.store_id = c.id 
+                                        JOIN region d ON c.region_id = d.id 
+                                    WHERE
+                                        a.id = $id 
+                                        AND a.surveyed = 1 
+                                        AND a.kuesioner = 1
+                                    ")->row_array();
+        }
+    }
+
+    public function getReport($id)
+    {
+        //id dari table store_survey
+
+        return $this->db->query("SELECT 
+                                    a.*, 
+                                    b.*, 
+                                    c.* 
+                                FROM 
+                                    report a 
+                                    JOIN report_detail b ON a.id = b.report_id 
+                                    JOIN kategori c ON b.kategori_id = c.id 
+                                WHERE 
+                                    a.store_survey_id = $id
+                                ")->result_array();
     }
 
 }

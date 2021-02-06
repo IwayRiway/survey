@@ -24,7 +24,9 @@ class Survey extends CI_Controller {
 
     public function survey($id)
     {
-      $data['store'] = 1;
+      // $id = id table store_survey
+      // $data['store'] = get data store_survey by id JOIN dengan STORE
+      $data['id'] = $id;
 
       $this->load->view('templates/header');
       $this->load->view('templates/sidebar');
@@ -35,36 +37,36 @@ class Survey extends CI_Controller {
     public function save()
     {
          $data = $this->Survey_model->save();
-         $id = $this->input->post('id');
+         $id = $this->input->post('id'); // id table store_survey
 
          if($data == 200){
             $this->session->set_flashdata('sukses', 'Data Berhasil Simpan');
             redirect('shp/survey/kuesioner/' . $id);
          } else {
-            $this->session->set_flashdata('gagal', 'Lokasi anda Lebih dari 20m dari store');
+            $this->session->set_flashdata('gagal', 'Lokasi anda Lebih Dari 20m dari store');
             redirect('shp/survey/survey/' . $id);
          }
     }
 
     public function kuesioner($id)
     {
-      $data['store_survey'] = $id;
+      $data['store_survey'] = $id; //id dari table store_survey
 
       $kategori = $this->Kategori_model->getData();
       $raw = [];
-        foreach ($kategori as $key => $kt) {
-            $kuesioner = [];
-            $pertanyaan = $this->Kuesioner_model->getDataByKategori($kt['id']);
+      foreach ($kategori as $key => $kt) {
+          $kuesioner = [];
+          $pertanyaan = $this->Kuesioner_model->getDataByKategori($kt['id']);
 
-            foreach ($pertanyaan as $key => $db) {
-               $pilihan = $this->Kuesioner_model->getPilihan($db['id']);
-               $kuesioner[$db['pertanyaan']] = $pilihan;
-            }
+          foreach ($pertanyaan as $key => $db) {
+              $pilihan = $this->Kuesioner_model->getPilihan($db['id']);
+              $kuesioner[$db['pertanyaan']] = $pilihan;
+          }
 
-            $raw[$kt['nama']] = $kuesioner;
-        }
+          $raw[$kt['nama']] = $kuesioner;
+      }
 
-        $data['data'] = $raw;
+      $data['data'] = $raw;
 
       $this->load->view('templates/header');
       $this->load->view('templates/sidebar');
@@ -74,14 +76,50 @@ class Survey extends CI_Controller {
 
     public function saveKuesioner()
     {
-      $id = $this->input->post('id');
+        $id = $this->input->post('id'); //id dari table store_survey
 
-        $data = $this->Survey_model->saveKuesioner();
+        $this->Survey_model->saveKuesioner();
         $this->Survey_model->report($id);
+
+        // $survey = $this->Survey_model->getSurvey($id);
+        // $report = $this->Survey_model->getReport($id);
+
+        // $data['file'] = $report[0]['file'];
+        // $data['nama'] = $survey['nama'];
+        // $data['hp'] = $survey['hp'];;
+        // $data['email'] = $survey['email'];;
+        // $data['toko'] = $survey['toko'];
+        // $data['region'] = $survey['region'];
+        // $data['manager'] = $survey['manager'];
+        // $data['alamat'] = $survey['alamat'];
+        // $data['tgl_survey'] = $survey['tanggal_survey'];
+        // $data['persentase'] = $report[0]['persentase'];
+        // $data['detail'] = $report;
+
+        // $dataEmail['email'] = 'email yang dikirim';
+        // $dataEmail['nama'] = $data['toko'];
+        // $dataEmail['region'] = $data['region'];
+        // $dataEmail['manager'] = $data['manager'];
+        // $dataEmail['alamat'] = $data['alamat'];
+        // $dataEmail['tgl_survey'] = $data['tgl_survey'];
+        // $dataEmail['persentase'] = $data['persentase'];
+        // $dataEmail['file'] = $data['file'] . '.pdf';
+
+        $this->_mypdf($data);
+        send_email($dataEmail);
 
         $this->session->set_flashdata('sukses', 'Data Berhasil Simpan');
         redirect('shp/survey');
     }
+
+    private function _mypdf($data){
+      $this->load->library('pdfgenerator');
+      $file_pdf = $data['file'];
+      $paper = 'A4';
+      $orientation = "portrait";
+      $html = $this->load->view('laporan_pdf',$data, true);	    
+      $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
+ }
 
     public function report()
     {

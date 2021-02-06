@@ -10,7 +10,7 @@
 
           <div class="section-body">
             <form method="POST" action="<?=base_url('shp/survey/save')?>" enctype="multipart/form-data">
-              <input type="hidden" name="id" id="id" value="">
+              <input type="hidden" name="id" id="id" value="<?=$id?>">
               <div class="row">
                   <div class="col-sm-6">
                       <div class="card">
@@ -18,19 +18,19 @@
                               <div class="row">
                                   <div class="form-group col-sm-12">
                                   <label for="nama">Nama Store</label>
-                                  <input id="nama" type="text" class="form-control" name="nama" disabled>
+                                  <input id="nama" type="text" class="form-control" name="nama" disabled value="<?=$store['']?>">
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="form-group col-sm-12">
                                   <label for="nama">Alamat Store</label>
-                                    <textarea id="nama" type="text" class="form-control" name="nama" disabled></textarea>
+                                    <textarea id="nama" type="text" class="form-control" name="nama" disabled><?=$store['']?></textarea>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="form-group col-sm-12">
                                   <label for="nama">Batas Waktu Survey</label>
-                                  <input id="nama" type="text" class="form-control" name="nama" disabled>
+                                  <input id="nama" type="text" class="form-control" name="nama" disabled value="<?=$store['']?>">
                                   </div>
                               </div>
 
