@@ -9,7 +9,7 @@
           </div>
 
           <div class="section-body">
-            <form method="POST" action="<?=base_url('shp/survey/save')?>" enctype="multipart/form-data">
+            <form method="POST" action="<?=base_url('surveyshp/save')?>" enctype="multipart/form-data">
               <input type="hidden" name="id" id="id" value="<?=$id?>">
               <?php $loc = explode(",", $store['lokasi'])?>
               <input type="hidden" name="latitude_store" id="latitude_store" value="<?=$loc[0]?>">
@@ -64,7 +64,7 @@
 
                               <div class="card-footer text-center">
                                  <button class="btn btn-primary mr-1" type="submit">Simpan</button>
-                                 <a href="<?=base_url('shp/survey')?>" class="btn btn-danger">Batal</a>
+                                 <a href="<?=base_url('surveyshp')?>" class="btn btn-danger">Batal</a>
                               </div>
 
                           </div>

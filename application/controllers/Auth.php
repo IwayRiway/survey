@@ -6,8 +6,7 @@ class Auth extends CI_Controller {
      public function __construct()
     {
         parent::__construct();
-        $this->load->model('Auth_model');
-        $this->load->model('Department_model');
+        // $this->load->model('Auth_model');
         $this->load->library('form_validation');
     }
 
@@ -21,9 +20,9 @@ class Auth extends CI_Controller {
         $username = $this->input->post('username');
 
         if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
-            $user = $this->db->get_where('karyawan', ['email'=>$this->input->post('username')])->row_array();
+            $user = $this->db->get_where('user', ['email'=>$this->input->post('username')])->row_array();
         } else {
-            $user = $this->db->get_where('karyawan', ['username'=>$this->input->post('username')])->row_array();
+            // $user = $this->db->get_where('karyawan', ['username'=>$this->input->post('username')])->row_array();
         }
 
         if($user){
@@ -31,10 +30,8 @@ class Auth extends CI_Controller {
                 $data =  [
                     'id' => $user['id'],
                     'email' => $user['email'],
-                    'username' => $user['username'],
                     'nama' => $user['nama'],
-                    'jabatan_id' => $user['jabatan_id'],
-                    'department_id' => $user['department_id'],
+                    'is_spv' => 0,
                 ];
                 $this->session->set_userdata($data);
                 redirect('dashboard');
@@ -54,20 +51,10 @@ class Auth extends CI_Controller {
         public function logout(){
             $this->session->unset_userdata('id');
             $this->session->unset_userdata('email');
-            $this->session->unset_userdata('username');
             $this->session->unset_userdata('nama');
-            $this->session->unset_userdata('jabatan_id');
-            $this->session->unset_userdata('department_id');
+            $this->session->unset_userdata('is_spv');
         
             redirect('auth');
         }
-
-        public function signup()
-        {
-            $data['department'] = $this->Department_model->getDepartment();
-
-            $this->load->view('auth/signup', $data);
-        }
-
     }
 

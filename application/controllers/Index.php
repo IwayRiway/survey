@@ -12,7 +12,7 @@ class Index extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('shp/auth/index');
+		$this->load->view('auth/index');
     }
 
     public function login(){
@@ -34,15 +34,15 @@ class Index extends CI_Controller {
                     'is_spv' => 1,
                 ];
                 $this->session->set_userdata($data);
-                redirect('shp/survey');
+                redirect('surveyshp');
             } else {
                 $this->session->set_flashdata('gagal', 'Password Anda Salah');
-                redirect('shp/index');
+                redirect('index');
             }
             
         } else {
             $this->session->set_flashdata('warning', 'Username Tidak Ditemukan');
-            redirect('shp/index');
+            redirect('index');
         }
 
         
@@ -54,7 +54,7 @@ class Index extends CI_Controller {
             $this->session->unset_userdata('nama');
             $this->session->unset_userdata('is_spv');
         
-            redirect('shp/survey/index');
+            redirect('index');
         }
 }
 

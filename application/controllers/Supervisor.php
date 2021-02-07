@@ -6,7 +6,7 @@ class Supervisor extends CI_Controller {
      public function __construct()
     {
         parent::__construct();
-        // is_login();
+        is_login();
         $this->load->model('Supervisor_model');
         $this->load->library('form_validation');
     }

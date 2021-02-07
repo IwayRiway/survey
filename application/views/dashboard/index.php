@@ -10,56 +10,50 @@
 
     <div class="section-body">
 
-    <?php if($this->session->userdata('department_id')==10):?>
-    <h2 class="section-title">Pengajuan Karyawan Baru</h2>
     <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="<?=base_url('pengajuan/history')?>">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-primary">
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                        <h4>Total Pengajuan Karyawan</h4>
+                        <h4>Total Store Survey</h4>
                         </div>
                         <div class="card-body">
-                        <?=$total_pkb?>
+                            <?=$total?>
                         </div>
                     </div>
                 </div>
-            </a>
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="<?=base_url('pengajuan/pengajuan')?>">
                 <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="fas fa-user-clock"></i>
+                    <div class="card-icon bg-success">
+                    <i class="fas fa-user-check"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                        <h4>Pengajuan (Pending)</h4>
+                        <h4>Selesai</h4>
                         </div>
                         <div class="card-body">
-                        <?=$pengajuan_pkb?>
+                        <?=$selesai?>
                         </div>
                     </div>
                 </div>
-            </a>
         </div>
         
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="fas fa-user-check"></i>
+                    <div class="card-icon bg-warning">
+                        <i class="fas fa-user-tag"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                        <h4>Pengajuan (Accept)</h4>
+                        <h4>Survey ke-1</h4>
                         </div>
                         <div class="card-body">
-                        <?=$acc_pkb?>
+                            <?=$satu['selesai']?> / <?=$satu['total']?>
                         </div>
                     </div>
                 </div>
@@ -68,380 +62,290 @@
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-danger">
-                        <i class="fas fa-user-times"></i>
+                        <i class="fas fa-user-tag"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                        <h4>Pengajuan (Decline)</h4>
+                        <h4>Survey Ke-2</h4>
                         </div>
                         <div class="card-body">
-                        <?=$dc_pkb?>
+                            <?php if($setting['maks_survey']!=1):?>
+                            <?=$dua['selesai']?> / <?=$dua['total']?>
+                            <?php else :?>
+                            N / A
+                            <?php endif?>
                         </div>
                     </div>
                 </div>
         </div>
     </div>
-    <?php endif?>
+    </div>
 
-    <?php if($this->session->userdata('jabatan_id')==3):?>
-    <h2 class="section-title">Pengajuan Cuti Staff</h2>
     <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="<?=base_url('cuti/history')?>">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="far fa-calendar-alt"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Total Pengajuan Cuti</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$total_c?>
-                        </div>
-                    </div>
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-header">
+                    <h6>Data Region</h6>
                 </div>
-            </a>
+                <div class="card-body" id="data-region" style="height:400px; width:100%;">
+                    <div class="text-center"><i class="fa fa-spinner fa-spin"></i></div>
+                </div>
+            </div>
         </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="<?=base_url('cuti/pengajuan')?>">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="far fa-calendar-minus"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Pending)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$pengajuan_c?>
-                        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-header">
+                  <h6>Pesentase < 80%</h6>   
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama</th>
+                                    <th>Persentase</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i=1; foreach($store as $db):?>
+                                    <tr role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
+                                        <td><?=$i++?></td>
+                                        <td><?=$db['nama']?></td>
+                                        <td><?=$db['persentase']?> %</td>
+                                    </tr>
+                                    <tr class="collapse" id="panel-body-1">
+                                        <td></td>
+                                        <td>
+                                            <?php foreach ($db['detail'] as $key) {
+                                                echo $key['nama'] . "<br>";
+                                            }?>
+                                        </td>
+                                        <td>
+                                            <?php foreach ($db['detail'] as $key) {
+                                                echo $key['persentase'] . " %<br>";
+                                            }?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </a>
-        </div>
-        
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="far fa-calendar-check"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Accept)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$acc_c?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-danger">
-                        <i class="far fa-calendar-times"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Decline)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$dc_c?>
-                        </div>
-                    </div>
-                </div>
+            </div>
         </div>
     </div>
 
-    <h2 class="section-title">Pengajuan Lembur Staff</h2>
     <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="<?=base_url('lembur/history')?>">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="far fa-calendar-alt"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Total Pengajuan Lembur</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$total_l?>
-                        </div>
-                    </div>
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6>Data Store</h6>
                 </div>
-            </a>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="<?=base_url('lembur/pengajuan')?>">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="far fa-calendar-minus"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Pending)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$pengajuan_l?>
-                        </div>
-                    </div>
+                <div class="card-body" id="data-store" style="height:400px; width:100%;">
+                    <div class="text-center"><i class="fa fa-spinner fa-spin"></i></div>
                 </div>
-            </a>
+            </div>
         </div>
-        
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="far fa-calendar-check"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Accept)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$acc_l?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-danger">
-                        <i class="far fa-calendar-times"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Decline)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$dc_l?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-
-    <h2 class="section-title">Pengajuan Karyawan Baru Anda</h2>
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="#">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Total Pengajuan Karyawan Baru</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$total_pkb_m?>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="#">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="fas fa-user-clock"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Pending)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$pengajuan_pkb_m?>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Accept)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$acc_pkb_m?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-danger">
-                        <i class="fas fa-user-times"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Decline)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$dc_pkb_m?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    <?php endif?>
-
-    <h2 class="section-title">Pengajuan Cuti Anda</h2>
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="#">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="far fa-calendar-alt"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Total Pengajuan Cuti</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$total_cs?>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="#">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="far fa-calendar-minus"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Pending)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$pengajuan_cs?>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="far fa-calendar-check"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Accept)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$acc_cs?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-danger">
-                        <i class="far fa-calendar-times"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Decline)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$dc_cs?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-
-    <h2 class="section-title">Pengajuan Lembur Anda</h2>
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="#">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
-                        <i class="far fa-calendar-alt"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Total Pengajuan Lembur</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$total_ls?>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-            <a href="#">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-warning">
-                        <i class="far fa-calendar-minus"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Pending)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$pengajuan_ls?>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="far fa-calendar-check"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Accept)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$acc_ls?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-danger">
-                        <i class="far fa-calendar-times"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                        <h4>Pengajuan (Decline)</h4>
-                        </div>
-                        <div class="card-body">
-                        <?=$dc_ls?>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-
     </div>
 
 </section>
 </div>
+
+<script src="<?=base_url('assets/js/echarts/echarts.min.js')?>"></script>
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable({"ordering": false});
+        getDataStore();
+        getDataRegion();
+    });
+
+    function getDataRegion() {
+        $.ajax({
+            url:"<?= base_url('dashboard/getDataRegion')?>",
+            type:"POST",
+            dataType: 'json',
+            data:{},
+            success:function(data){
+                dataRegion(data);
+            }
+        });
+    }
+
+    function getDataStore() {
+        $.ajax({
+            url:"<?= base_url('dashboard/getDataStore')?>",
+            type:"POST",
+            dataType: 'json',
+            data:{},
+            success:function(data){
+                dataStore(data);
+            }
+        });
+    }
+
+    function dataStore(param) {
+        var store = echarts.init(document.getElementById('data-store'));
+        store.clear();
+        option1 = {
+            legend: {
+                data: ['Persentase Store']
+            },
+            animation: true,
+            tooltip: {
+                show: true,
+                trigger: 'axis',
+            },
+            toolbox: {
+                feature: {
+                    restore: {
+                        title: 'Reset',
+                    },
+                    saveAsImage: {
+                        title: 'Save Png',
+                    }
+                }
+            },
+            title: {
+                left: 'center',
+                text: '',
+            },
+            xAxis: {
+                type: 'category',
+                data: param.store,
+                splitLine: {
+                    show: true,
+                    onGap: null,
+                    // Garis Pebatas
+                    lineStyle: {
+                        color: '#E4E4E4',
+                        type: 'solid',
+                        width: 1,
+                        shadowColor: 'rgba(0,0,0,0)',
+                        shadowBlur: 5,
+                        shadowOffsetX: 3,
+                        shadowOffsetY: 3,
+                    },
+                },
+            },
+            yAxis: {
+                type: 'value',
+                name: "%"
+                // boundaryGap: [0, '5%']
+            },
+            grid: {
+                x: 60,
+                y: 20,
+                x2: 40,
+                y2: 80
+            },
+            dataZoom: [{
+                    type: 'inside',
+                    start: 0,
+                },
+                {
+                    start: 0,
+                    handleSize: '100%',
+                    handleStyle: {
+                        color: '#fff',
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.6)',
+                        shadowOffsetX: 2,
+                        shadowOffsetY: 2
+                    }
+                }
+            ],
+            series: [{
+                name: 'Persentase Store',
+                type: 'bar',
+                barGap: '2%',
+                data: param.persentase
+            }],
+            color: ['#0047ff']
+        };
+        store.setOption(option1);
+    }
+
+    function dataRegion(param) {
+        var store = echarts.init(document.getElementById('data-region'));
+        store.clear();
+        option1 = {
+            legend: {
+                data: ['Persentase Region']
+            },
+            animation: true,
+            tooltip: {
+                show: true,
+                trigger: 'axis',
+            },
+            toolbox: {
+                feature: {
+                    restore: {
+                        title: 'Reset',
+                    },
+                    saveAsImage: {
+                        title: 'Save Png',
+                    }
+                }
+            },
+            title: {
+                left: 'center',
+                text: '',
+            },
+            xAxis: {
+                type: 'category',
+                data: param.region,
+                splitLine: {
+                    show: true,
+                    onGap: null,
+                    // Garis Pebatas
+                    lineStyle: {
+                        color: '#E4E4E4',
+                        type: 'solid',
+                        width: 1,
+                        shadowColor: 'rgba(0,0,0,0)',
+                        shadowBlur: 5,
+                        shadowOffsetX: 3,
+                        shadowOffsetY: 3,
+                    },
+                },
+            },
+            yAxis: {
+                type: 'value',
+                name: "%"
+                // boundaryGap: [0, '5%']
+            },
+            grid: {
+                x: 60,
+                y: 20,
+                x2: 40,
+                y2: 80
+            },
+            dataZoom: [{
+                    type: 'inside',
+                    start: 0,
+                },
+                {
+                    start: 0,
+                    handleSize: '100%',
+                    handleStyle: {
+                        color: '#fff',
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.6)',
+                        shadowOffsetX: 2,
+                        shadowOffsetY: 2
+                    }
+                }
+            ],
+            series: [{
+                name: 'Persentase Region',
+                type: 'bar',
+                barGap: '2%',
+                data: param.persentase
+            }],
+            color: ['#0047ff']
+        };
+        store.setOption(option1);
+    }
+</script>
 

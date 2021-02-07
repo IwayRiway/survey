@@ -9,7 +9,7 @@
     </div>
 
     <div class="section-body">
-    <form action="<?=base_url('shp/survey/saveKuesioner')?>" method="post">
+    <form action="<?=base_url('surveyshp/saveKuesioner')?>" method="post">
     <input type="hidden" name="id" id="id" value="<?=$store_survey?>">
 
         <?php foreach ($data as $key => $value):?>
@@ -48,7 +48,7 @@
                 <div class="card">
                     <div class="card-footer text-center">
                         <button class="btn btn-primary mr-1" type="submit">Simpan</button>
-                        <a href="<?=base_url('shp/survey')?>" class="btn btn-danger">Batal</a>
+                        <a href="<?=base_url('surveyshp')?>" class="btn btn-danger">Batal</a>
                     </div>
                 </div>
             </div>

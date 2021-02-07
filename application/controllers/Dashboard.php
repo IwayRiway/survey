@@ -6,84 +6,69 @@ class Dashboard extends CI_Controller {
      public function __construct()
     {
         parent::__construct();
-        // is_login();
-        // $this->load->model('Pengajuan_model');
-        // $this->load->model('Lembur_model');
-        // $this->load->model('Cuti_model');
+        is_login();
+        $this->load->model('Dashboard_model');
         $this->load->library('form_validation');
     }
 
 	public function index()
 	{
         $data['judul'] = "Dashboard";
+
+        $data['total'] = $this->Dashboard_model->getAllData();
+        $data['selesai'] = $this->Dashboard_model->getAllDataSelesai();
+        $data['satu'] = $this->Dashboard_model->getAllDataSurvey1();
+        $data['dua'] = $this->Dashboard_model->getAllDataSurvey2();
+
+        $data['setting'] = $this->db->get('setting')->row_array();
+
+        $store = $this->Dashboard_model->getStore();
+        $raw = [];
+        foreach ($store as $key => $db) {
+            $persentase = $db['persentase'];
+            $nama = $db['nama'];
+            $detail = $this->Dashboard_model->reportDetail($db['store_id']);
+
+            $array = ['persentase' => $persentase, 'nama' => $nama, 'detail' => $detail];
+            array_push($raw, $array);
+        }
+
+        $data['store'] = $raw;
         
-        // FOR HRD
-        if($this->session->userdata('department_id')==10){
-            $data['total_pkb'] = count($this->Pengajuan_model->getDataPengajuanTotal());
-            $data['pengajuan_pkb'] = count($this->Pengajuan_model->getDataPengajuan());
-            $data['acc_pkb'] = count($this->Pengajuan_model->getDataPengajuanAcc());
-            $data['dc_pkb'] = count($this->Pengajuan_model->getDataPengajuanDc());
-        }
-
-        // FOR MANAGER
-        if($this->session->userdata('jabatan_id')==3){
-            $data['total_l'] = count($this->Lembur_model->getDataPengajuanTotal());
-            $data['pengajuan_l'] = count($this->Lembur_model->getDataPengajuan());
-            $data['acc_l'] = count($this->Lembur_model->getDataPengajuanAcc());
-            $data['dc_l'] = count($this->Lembur_model->getDataPengajuanDc());
-
-            $data['total_c'] = count($this->Cuti_model->getDataPengajuanTotal());
-            $data['pengajuan_c'] = count($this->Cuti_model->getDataPengajuan());
-            $data['acc_c'] = count($this->Cuti_model->getDataPengajuanAcc());
-            $data['dc_c'] = count($this->Cuti_model->getDataPengajuanDc());
-
-            $data['total_pkb_m'] = $this->Pengajuan_model->getDataPengajuanTotalManager();
-            $data['pengajuan_pkb_m'] = $this->Pengajuan_model->getDataPengajuanManager();
-            $data['acc_pkb_m'] = $this->Pengajuan_model->getDataPengajuanAccManager();
-            $data['dc_pkb_m'] = $this->Pengajuan_model->getDataPengajuanDcManager();
-        }
-
-        // FOR ALL
-        $data['total_ls'] = $this->Lembur_model->getDataPengajuanTotalBySession();
-        $data['pengajuan_ls'] = $this->Lembur_model->getDataPengajuanBySession();
-        $data['acc_ls'] = $this->Lembur_model->getDataPengajuanAccBySession();
-        $data['dc_ls'] = $this->Lembur_model->getDataPengajuanDcBySession();
-
-        $data['total_cs'] = $this->Cuti_model->getDataPengajuanTotalBySession();
-        $data['pengajuan_cs'] = $this->Cuti_model->getDataPengajuanBySession();
-        $data['acc_cs'] = $this->Cuti_model->getDataPengajuanAccBySession();
-        $data['dc_cs'] = $this->Cuti_model->getDataPengajuanDcBySession();
-
         $this->load->view('templates/header');
         $this->load->view('templates/sidebar');
         $this->load->view('dashboard/index', $data);
         $this->load->view('templates/footer');
     }
 
-    function mypdf(){
-         // panggil library yang kita buat sebelumnya yang bernama pdfgenerator
-         $this->load->library('pdfgenerator');
-        
-         // title dari pdf
-         $data['judul'] = 'XDSa';
-         
-         // filename dari pdf ketika didownload
-         $file_pdf = 'laporan_penjualan_toko_kita';
-         // setting paper
-         $paper = 'A4';
-         //orientasi paper potrait / landscape
-         $orientation = "portrait";
-         
-         $html = $this->load->view('laporan_pdf',$data, true);	    
-         
-         // run dompdf
-         $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
-         var_dump("DONE");
+    public function getDataStore()
+    {
+        $data = $this->Dashboard_model->getDataStore();
+        $store = [];
+        $persentase = [];
+
+        foreach ($data as $key => $db) {
+            array_push($store, $db['nama']);
+            array_push($persentase, str_replace(",",".",$db['persentase']));
+        }
+
+        $json = ['persentase'=>$persentase,'store'=>$store];
+        echo json_encode($json);
     }
 
-    public function tes()
+    public function getDataRegion()
     {
-        var_dump(date('YmdHis'));
+        $data = $this->Dashboard_model->getDataRegion();
+        $store = [];
+        $persentase = [];
+
+        foreach ($data as $key => $db) {
+            array_push($store, $db['nama']);
+            array_push($persentase, $db['persentase']);
+        }
+
+        $json = ['persentase'=>$persentase,'region'=>$store];
+        echo json_encode($json);
     }
 }
 

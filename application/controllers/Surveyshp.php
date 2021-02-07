@@ -1,11 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Survey extends CI_Controller {
+class Surveyshp extends CI_Controller {
 
      public function __construct()
     {
         parent::__construct();
+        is_login2();
         $this->load->model('Kuesioner_model');
         $this->load->model('Kategori_model');
         $this->load->model('Survey_model');
@@ -17,7 +18,7 @@ class Survey extends CI_Controller {
       $data['judul'] = "Data Survey Store";
       $data['survey'] = $this->Survey_model->getDataSpvById();
 
-      $this->load->view('templates/header');
+      $this->load->view('templates/header2');
       $this->load->view('templates/sidebar2');
       $this->load->view('shp/survey/index', $data);
       $this->load->view('templates/footer');
@@ -27,7 +28,7 @@ class Survey extends CI_Controller {
     {
       $data['store'] = $this->Survey_model->getDataStoreByRegion(); //karena masi supervisor aja
 
-      $this->load->view('templates/header');
+      $this->load->view('templates/header2');
       $this->load->view('templates/sidebar');
       $this->load->view('shp/survey/create', $data);
       $this->load->view('templates/footer');
@@ -39,7 +40,7 @@ class Survey extends CI_Controller {
 
       if($data == 200){
         $this->session->set_flashdata('sukses', 'Data Berhasil Disimpan');
-        redirect('shp/survey');
+        redirect('surveyshp');
       } else {
           $this->session->set_flashdata('gagal', $data);
           redirect($_SERVER['HTTP_REFERER']);
@@ -52,7 +53,7 @@ class Survey extends CI_Controller {
       $data['store'] = $this->Survey_model->getDataStoreByid($id);
       $data['id'] = $id;
 
-      $this->load->view('templates/header');
+      $this->load->view('templates/header2');
       $this->load->view('templates/sidebar2');
       $this->load->view('shp/survey/survey', $data);
       $this->load->view('templates/footer');
@@ -65,10 +66,10 @@ class Survey extends CI_Controller {
 
          if($data == 200){
             $this->session->set_flashdata('sukses', 'Data Berhasil Simpan');
-            redirect('shp/survey/kuesioner/' . $id);
+            redirect('surveyshp/kuesioner/' . $id);
          } else {
             $this->session->set_flashdata('gagal', 'Lokasi anda Lebih Dari 500m dari store');
-            redirect('shp/survey/survey/' . $id);
+            redirect('surveyshp/survey/' . $id);
          }
     }
 
@@ -92,7 +93,7 @@ class Survey extends CI_Controller {
 
       $data['data'] = $raw;
 
-      $this->load->view('templates/header');
+      $this->load->view('templates/header2');
       $this->load->view('templates/sidebar2');
       $this->load->view('shp/survey/kuesioner', $data);
       $this->load->view('templates/footer');
@@ -137,7 +138,7 @@ class Survey extends CI_Controller {
         send_mail($dataEmail);
 
         $this->session->set_flashdata('sukses', 'Data Berhasil Simpan');
-        redirect('shp/survey');
+        redirect('surveyshp');
     }
 
     private function _mypdf($data){

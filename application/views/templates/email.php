@@ -108,8 +108,8 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
                                   <tbody>
                                     <tr>
-                                      <td style="width:150px;">
-                                        <img alt="logo" height="auto" src="<?=base_url('assets/img/logo.png')?>" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150">
+                                      <td>
+                                        <img alt="logo" src="<?=base_url('assets/img/logo.png')?>" style="border:0;display:block;outline:none;text-decoration:none;max-height:150px;max-width:150px;font-size:13px;" width="30">
                                       </td>
                                     </tr>
                                   </tbody>
@@ -148,8 +148,8 @@
                                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
                                   <tbody>
                                     <tr>
-                                      <td style="width:150px;">
-                                        <img alt="tickets" height="auto" src="<?=base_url('assets/img/confirm.png')?>" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;" width="150">
+                                      <td >
+                                        <img alt="tickets" height="auto" src="<?=base_url('assets/img/confirm.png')?>" style="border:0;display:block;outline:none;text-decoration:none;font-size:13px;" width="250">
                                       </td>
                                     </tr>
                                   </tbody>
@@ -226,18 +226,18 @@
                               </td>
                             </tr>
                             <tr>
-                              <td align="left" style="font-size:0px;padding:0px;padding-bottom:20px;word-break:break-word;">
+                              <td align="left" style="font-size:0px;padding:0px;word-break:break-word;">
                                 <div style="font-family:Poppins, Lato, Helvetica, Arial, sans-serif;font-size:16px;font-weight:100;line-height:1.5;text-align:left;color:#000000;"><strong>Alamat <span>: <?=$alamat?></span></strong></div>
                               </td>
                             </tr>
                             <tr>
-                              <td align="left" style="font-size:0px;padding:0px;padding-bottom:20px;word-break:break-word;">
+                              <td align="left" style="font-size:0px;padding:0px;word-break:break-word;">
                                 <div style="font-family:Poppins, Lato, Helvetica, Arial, sans-serif;font-size:16px;font-weight:100;line-height:1.5;text-align:left;color:#000000;"><strong>Tanggal Survei <span>: <?=$tgl_survey?></span></strong></div>
                               </td>
                             </tr>
                             <tr>
                               <td align="left" style="font-size:0px;padding:0px;padding-bottom:20px;word-break:break-word;">
-                                <div style="font-family:Poppins, Lato, Helvetica, Arial, sans-serif;font-size:16px;font-weight:100;line-height:1.5;text-align:left;color:#000000;"><strong>Pernsentase <span>: <?=$persentase?></span></strong></div>
+                                <div style="font-family:Poppins, Lato, Helvetica, Arial, sans-serif;font-size:16px;font-weight:100;line-height:1.5;text-align:left;color:#000000;"><strong>Persentase <span>: <?=$persentase?></span> %</strong></div>
                               </td>
                             </tr>
                           </tbody>
@@ -289,7 +289,7 @@
                           <tbody>
                             <tr>
                               <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <div style="font-family:Poppins, Lato, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#ffffff;">Copyright &copy; 2020 -- Mywayout</div>
+                                <div style="font-family:Poppins, Lato, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#ffffff;">Copyright &copy; 2021 -- Mywayout</div>
                               </td>
                             </tr>
                           </tbody>

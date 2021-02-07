@@ -43,7 +43,7 @@
                </div>
 
               <div class="card-body">
-              <form method="POST" action="<?=base_url('shp/index/login')?>" class="needs-validation" novalidate="">
+              <form method="POST" action="<?=base_url('index/login')?>" class="needs-validation" novalidate="">
                   <div class="form-group">
                     <label for="username">Username</label>
                     <input id="text" type="username" class="form-control" name="username" tabindex="1" required autofocus>

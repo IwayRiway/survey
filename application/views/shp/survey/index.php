@@ -5,7 +5,7 @@
     <h1><?=$judul?></h1>
 
         <div class="section-header-button">
-            <a href="<?=base_url('shp/survey/create')?>" class="btn btn-primary">Add New</a>
+            <a href="<?=base_url('surveyshp/create')?>" class="btn btn-primary">Add New</a>
         </div>
 
         <div class="section-header-breadcrumb">
@@ -43,10 +43,12 @@
                                     <td><i class="fas fa-stop text-<?=$db['surveyed']==1?'success':'danger'?>"></i></td>
                                     <td><i class="fas fa-stop text-<?=$db['kuesioner']==1?'success':'danger'?>"></i></td>
                                     <td>
-                                        <a href="<?=base_url('shp/survey/survey/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-success mr-2" title="Survey"><i class="fas fa-check"></i></a>
+                                        <?php if($db['surveyed']==0):?>
+                                            <a href="<?=base_url('surveyshp/survey/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-success mr-2" title="Survey"><i class="fas fa-check"></i></a>
+                                        <?php endif?>
 
                                         <?php if($db['surveyed']==1 AND $db['kuesioner']==0):?>
-                                            <a href="<?=base_url('survey/detail/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-info mr-2" title="Kuesioner"><i class="fas fa-edit"></i></a>
+                                            <a href="<?=base_url('surveyshp/kuesioner/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-info mr-2" title="Kuesioner"><i class="fas fa-edit"></i></a>
                                         <?php endif?>
                                     </td>
                                 </tr>

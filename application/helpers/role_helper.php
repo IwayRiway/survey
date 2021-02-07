@@ -4,29 +4,39 @@ function is_login()
 {
    $ci = get_instance();
    if($ci->session->userdata('id')){
-      $url = $ci->uri->segment(1);
-      $url2 = "";
+      // $url = $ci->uri->segment(1);
+      // $url2 = "";
 
-      if($ci->uri->segment(2)==true){
-            $url2 = "/".$ci->uri->segment(2);
-      }
+      // if($ci->uri->segment(2)==true){
+      //       $url2 = "/".$ci->uri->segment(2);
+      // }
 
-      $url = $url.$url2;
-      $role = $ci->session->userdata('department_id');
+      // $url = $url.$url2;
+      // $role = $ci->session->userdata('department_id');
 
-      if(!($ci->uri->segment(2) == 'save' OR $ci->uri->segment(2)=='update')){
+      // if(!($ci->uri->segment(2) == 'save' OR $ci->uri->segment(2)=='update')){
 
-         $access = $ci->db->query("SELECT 1 FROM akses a JOIN menu b ON a.menu_id = b.id WHERE a.department_id = $role AND b.url = '$url'")->num_rows();
+      //    $access = $ci->db->query("SELECT 1 FROM akses a JOIN menu b ON a.menu_id = b.id WHERE a.department_id = $role AND b.url = '$url'")->num_rows();
          
-         if($access==0){
-            $ci->session->set_flashdata('gagal', 'Akses Ditolak');
-            redirect($_SERVER['HTTP_REFERER']);
-         }
+      //    if($access==0){
+      //       $ci->session->set_flashdata('gagal', 'Akses Ditolak');
+      //       redirect($_SERVER['HTTP_REFERER']);
+      //    }
          
-      }
+      // }
    } else {
       $ci->session->set_flashdata('info', 'Session Anda Telah Berakhir. SIlahkan Login Kembali');
       redirect('auth');
+   }
+}
+
+function is_login2()
+{
+   $ci = get_instance();
+   if($ci->session->userdata('id')){
+   } else {
+      $ci->session->set_flashdata('info', 'Session Anda Telah Berakhir. SIlahkan Login Kembali');
+      redirect('spv/index');
    }
 }
 

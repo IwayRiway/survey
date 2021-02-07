@@ -13,7 +13,7 @@
                 <div class="col-sm-6">
                     <div class="card">
                         <div class="card-body">
-                            <form method="POST" action="<?=base_url('shp/survey/saveStoreSurveyUser')?>" enctype="multipart/form-data">
+                            <form method="POST" action="<?=base_url('surveyshp/saveStoreSurveyUser')?>" enctype="multipart/form-data">
                             
                                 <div class="row">
                                     <div class="form-group col-sm-12">

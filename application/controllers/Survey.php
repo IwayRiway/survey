@@ -6,6 +6,7 @@ class Survey extends CI_Controller {
      public function __construct()
     {
         parent::__construct();
+        is_login();
         $this->load->model('Survey_model');
         $this->load->model('Store_model');
         $this->load->model('Supervisor_model');
