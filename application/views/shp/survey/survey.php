@@ -11,6 +11,9 @@
           <div class="section-body">
             <form method="POST" action="<?=base_url('shp/survey/save')?>" enctype="multipart/form-data">
               <input type="hidden" name="id" id="id" value="<?=$id?>">
+              <?php $loc = explode(",", $store['lokasi'])?>
+              <input type="hidden" name="latitude_store" id="latitude_store" value="<?=$loc[0]?>">
+              <input type="hidden" name="longitude_store" id="longitude_store" value="<?=$loc[1]?>">
               <div class="row">
                   <div class="col-sm-6">
                       <div class="card">
@@ -18,19 +21,19 @@
                               <div class="row">
                                   <div class="form-group col-sm-12">
                                   <label for="nama">Nama Store</label>
-                                  <input id="nama" type="text" class="form-control" name="nama" disabled value="<?=$store['']?>">
+                                  <input id="nama" type="text" class="form-control" name="nama" disabled value="<?=$store['nama']?>">
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="form-group col-sm-12">
                                   <label for="nama">Alamat Store</label>
-                                    <textarea id="nama" type="text" class="form-control" name="nama" disabled><?=$store['']?></textarea>
+                                    <textarea id="nama" type="text" class="form-control" name="nama" disabled><?=$store['alamat']?></textarea>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="form-group col-sm-12">
                                   <label for="nama">Batas Waktu Survey</label>
-                                  <input id="nama" type="text" class="form-control" name="nama" disabled value="<?=$store['']?>">
+                                  <input id="nama" type="text" class="form-control" name="nama" disabled value="<?=$store['batas_waktu']?>">
                                   </div>
                               </div>
 

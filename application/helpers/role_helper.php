@@ -65,7 +65,7 @@ function send_mail($data)
    $body = $ci->load->view('templates/email',$data,TRUE);
    $ci->email->message($body);
    $file = base_url('assets/report/') . $data['file'];
-   $this->email->attach($file);
+   $ci->email->attach($file);
    $ci->email->send();
 }
 

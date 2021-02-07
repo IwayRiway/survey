@@ -3,8 +3,9 @@
 <section class="section">
     <div class="section-header">
     <h1><?=$judul?></h1>
+
         <div class="section-header-button">
-            <a href="<?=base_url('survey/create')?>" class="btn btn-primary">Add New</a>
+            <a href="<?=base_url('shp/survey/create')?>" class="btn btn-primary">Add New</a>
         </div>
 
         <div class="section-header-breadcrumb">
@@ -27,10 +28,8 @@
                                 <th>Store</th>
                                 <th>Alamat</th>
                                 <th>Batas Waktu</th>
-                                <th>Surveyor</th>
                                 <th>Surveyed</th>
                                 <th>Kuesioner</th>
-                                <th>Survey Ke-</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -41,13 +40,13 @@
                                     <td><?=$db['nama']?></td>
                                     <td><?=$db['alamat']?></td>
                                     <td><?=$db['batas_waktu']?></td>
-                                    <td><?=$db['surveyor']?></td>
                                     <td><i class="fas fa-stop text-<?=$db['surveyed']==1?'success':'danger'?>"></i></td>
                                     <td><i class="fas fa-stop text-<?=$db['kuesioner']==1?'success':'danger'?>"></i></td>
-                                    <td><?=$db['survey']?></td>
                                     <td>
-                                        <?php if($db['surveyed'] !=1 AND $db['batas_waktu']>date('Y-m-d')):?>
-                                            <a href="<?=base_url('survey/delete/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-danger mr-2 tombol-hapus" title="Delete"><i class="fas fa-trash"></i></a>
+                                        <a href="<?=base_url('shp/survey/survey/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-success mr-2" title="Survey"><i class="fas fa-check"></i></a>
+
+                                        <?php if($db['surveyed']==1 AND $db['kuesioner']==0):?>
+                                            <a href="<?=base_url('survey/detail/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-info mr-2" title="Kuesioner"><i class="fas fa-edit"></i></a>
                                         <?php endif?>
                                     </td>
                                 </tr>

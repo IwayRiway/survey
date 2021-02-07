@@ -17,10 +17,10 @@ class Pdfgenerator {
         $pdfroot  = dirname(dirname(dirname(__FILE__)));
         $pdfroot .= '/assets/report/';
       //   if ($stream) {
-            $dompdf->stream($filename.".pdf", array("Attachment" => 0));
+            // $dompdf->stream($filename.".pdf", array("Attachment" => 0));
       //   } else {
-         // $pdf_string =   $dompdf->output();
-         // file_put_contents($pdfroot . $filename .'.pdf', $pdf_string );
+         $pdf_string =   $dompdf->output();
+         file_put_contents($pdfroot . $filename .'.pdf', $pdf_string );
       //   }
     }
 }

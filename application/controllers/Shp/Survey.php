@@ -15,22 +15,46 @@ class Survey extends CI_Controller {
     public function index()
     {
       $data['judul'] = "Data Survey Store";
+      $data['survey'] = $this->Survey_model->getDataSpvById();
+
+      $this->load->view('templates/header');
+      $this->load->view('templates/sidebar2');
+      $this->load->view('shp/survey/index', $data);
+      $this->load->view('templates/footer');
+    }
+
+    public function create()
+    {
+      $data['store'] = $this->Survey_model->getDataStoreByRegion(); //karena masi supervisor aja
 
       $this->load->view('templates/header');
       $this->load->view('templates/sidebar');
-      $this->load->view('survey/index', $data);
+      $this->load->view('shp/survey/create', $data);
       $this->load->view('templates/footer');
+    }
+
+    public function saveStoreSurveyUser()
+    {
+      $data = $this->Survey_model->saveStoreSurveyUser();
+
+      if($data == 200){
+        $this->session->set_flashdata('sukses', 'Data Berhasil Disimpan');
+        redirect('shp/survey');
+      } else {
+          $this->session->set_flashdata('gagal', $data);
+          redirect($_SERVER['HTTP_REFERER']);
+      }
     }
 
     public function survey($id)
     {
       // $id = id table store_survey
-      // $data['store'] = get data store_survey by id JOIN dengan STORE
+      $data['store'] = $this->Survey_model->getDataStoreByid($id);
       $data['id'] = $id;
 
       $this->load->view('templates/header');
-      $this->load->view('templates/sidebar');
-      $this->load->view('survey/survey', $data);
+      $this->load->view('templates/sidebar2');
+      $this->load->view('shp/survey/survey', $data);
       $this->load->view('templates/footer');
     }
 
@@ -43,7 +67,7 @@ class Survey extends CI_Controller {
             $this->session->set_flashdata('sukses', 'Data Berhasil Simpan');
             redirect('shp/survey/kuesioner/' . $id);
          } else {
-            $this->session->set_flashdata('gagal', 'Lokasi anda Lebih Dari 20m dari store');
+            $this->session->set_flashdata('gagal', 'Lokasi anda Lebih Dari 500m dari store');
             redirect('shp/survey/survey/' . $id);
          }
     }
@@ -69,8 +93,8 @@ class Survey extends CI_Controller {
       $data['data'] = $raw;
 
       $this->load->view('templates/header');
-      $this->load->view('templates/sidebar');
-      $this->load->view('survey/kuesioner', $data);
+      $this->load->view('templates/sidebar2');
+      $this->load->view('shp/survey/kuesioner', $data);
       $this->load->view('templates/footer');
     }
 
@@ -81,32 +105,36 @@ class Survey extends CI_Controller {
         $this->Survey_model->saveKuesioner();
         $this->Survey_model->report($id);
 
-        // $survey = $this->Survey_model->getSurvey($id);
-        // $report = $this->Survey_model->getReport($id);
+        $survey = $this->Survey_model->getSurvey($id);
+        $report = $this->Survey_model->getReport($id);
 
-        // $data['file'] = $report[0]['file'];
-        // $data['nama'] = $survey['nama'];
-        // $data['hp'] = $survey['hp'];;
-        // $data['email'] = $survey['email'];;
-        // $data['toko'] = $survey['toko'];
-        // $data['region'] = $survey['region'];
-        // $data['manager'] = $survey['manager'];
-        // $data['alamat'] = $survey['alamat'];
-        // $data['tgl_survey'] = $survey['tanggal_survey'];
-        // $data['persentase'] = $report[0]['persentase'];
-        // $data['detail'] = $report;
+        // var_dump($survey);
+        // var_dump($report);
+        // die;
 
-        // $dataEmail['email'] = 'email yang dikirim';
-        // $dataEmail['nama'] = $data['toko'];
-        // $dataEmail['region'] = $data['region'];
-        // $dataEmail['manager'] = $data['manager'];
-        // $dataEmail['alamat'] = $data['alamat'];
-        // $dataEmail['tgl_survey'] = $data['tgl_survey'];
-        // $dataEmail['persentase'] = $data['persentase'];
-        // $dataEmail['file'] = $data['file'] . '.pdf';
+        $data['file'] = $report[0]['file'];
+        $data['nama'] = $survey['nama'];
+        $data['hp'] = $survey['hp'];;
+        $data['email'] = $survey['email'];;
+        $data['toko'] = $survey['toko'];
+        $data['region'] = $survey['region'];
+        $data['manager'] = $survey['manager'];
+        $data['alamat'] = $survey['alamat'];
+        $data['tgl_survey'] = $survey['tanggal_survey'];
+        $data['persentase'] = $report[0]['persentase'];
+        $data['detail'] = $report;
+
+        $dataEmail['email'] = 'riway.restu@gmail.com';
+        $dataEmail['nama'] = $data['toko'];
+        $dataEmail['region'] = $data['region'];
+        $dataEmail['manager'] = $data['manager'];
+        $dataEmail['alamat'] = $data['alamat'];
+        $dataEmail['tgl_survey'] = $data['tgl_survey'];
+        $dataEmail['persentase'] = $data['persentase'];
+        $dataEmail['file'] = $data['file'] . '.pdf';
 
         $this->_mypdf($data);
-        send_email($dataEmail);
+        send_mail($dataEmail);
 
         $this->session->set_flashdata('sukses', 'Data Berhasil Simpan');
         redirect('shp/survey');
