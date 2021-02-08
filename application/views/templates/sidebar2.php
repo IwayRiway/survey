@@ -12,7 +12,7 @@
 
        <li class="<?=$side=='dashboard2'?'active':''?>"><a class="nav-link" href="<?=base_url('dashboard2')?>"><i class="fas fa-columns"></i><span>Dashboard</span></a></li> 
 
-       <li class="<?=$side=='surveyshp'?'active':''?>"><a class="nav-link" href="<?=base_url('surveyshp')?>"><i class="fas fa-address-card"></i><span>Data Survey</span></a></li>
+       <li class="<?=$side=='surveyshp'?'active':''?>"><a class="nav-link" href="<?=base_url('surveyshp')?>"><i class="fas fa-poll-h"></i><span>Survey</span></a></li>
 
       
    </aside>

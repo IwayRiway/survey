@@ -12,15 +12,17 @@
 
        <li class="<?=$side=='dashboard'?'active':''?>"><a class="nav-link" href="<?=base_url('dashboard')?>"><i class="fas fa-columns"></i><span>Dashboard</span></a></li> 
 
-       <li class="<?=$side=='kategori'?'active':''?>"><a class="nav-link" href="<?=base_url('kategori')?>"><i class="fas fa-address-card"></i><span>Data Kategori Kuesioner</span></a></li> 
+       <li class="<?=$side=='kategori'?'active':''?>"><a class="nav-link" href="<?=base_url('kategori')?>"><i class="fas fa-list-alt"></i><span>Kategori Kuesioner</span></a></li> 
 
-       <li class="<?=$side=='kuesioner'?'active':''?>"><a class="nav-link" href="<?=base_url('kuesioner')?>"><i class="fas fa-user-tie"></i><span>Data Kuesioner</span></a></li> 
+       <li class="<?=$side=='kuesioner'?'active':''?>"><a class="nav-link" href="<?=base_url('kuesioner')?>"><i class="fas fa-question-circle"></i><span>Kuesioner</span></a></li> 
 
-       <li class="<?=$side=='region'?'active':''?>"><a class="nav-link" href="<?=base_url('region')?>"><i class="fas fa-book"></i><span>Data Region</span></a></li> 
+       <li class="<?=$side=='region'?'active':''?>"><a class="nav-link" href="<?=base_url('region')?>"><i class="fas fa-map-marked"></i><span>Region</span></a></li> 
 
-       <li class="<?=$side=='store'?'active':''?>"><a class="nav-link" href="<?=base_url('store')?>"><i class="fas fa-book"></i><span>Data Store</span></a></li> 
+       <li class="<?=$side=='store'?'active':''?>"><a class="nav-link" href="<?=base_url('store')?>"><i class="fas fa-store"></i><span>Store</span></a></li> 
 
-       <li class="<?=$side=='supervisor'?'active':''?>"><a class="nav-link" href="<?=base_url('supervisor')?>"><i class="fas fa-folder"></i><span>Data Supervisor</span></a></li> 
+       <li class="<?=$side=='supervisor'?'active':''?>"><a class="nav-link" href="<?=base_url('supervisor')?>"><i class="fas fa-user-tie"></i><span>Supervisor</span></a></li> 
+
+       <li class="<?=$side=='survey'?'active':''?>"><a class="nav-link" href="<?=base_url('survey')?>"><i class="fas fa-poll-h"></i><span>Store Survey</span></a></li> 
 
        <li class="<?=$side=='setting'?'active':''?>"><a class="nav-link" href="<?=base_url('setting')?>"><i class="fas fa-sign-out-alt"></i><span>Setting</span></a></li> 
 

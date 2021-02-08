@@ -52,13 +52,14 @@
 
                               <div class="row">
                                   <div class="form-group col-sm-12">
-                                  <label for="nama">Ambil Gambar</label>
-                                    <div class="input-group mb-3">
+                                  <label for="nama">Ambil Gambar ku</label>
+                                  <input type="file" class="filestyle" data-btnClass="btn-success" data-text="Take Picture" id="file" name="file" required accept="image/*" capture="camera">
+                                    <!-- <div class="input-group mb-3">
                                       <div class="custom-file">
-                                          <input type="file" class="custom-file-input" id="file" name="file" required accept="image/*" capture="camera">
+                                          <input type="file" class="" id="file" name="file" required accept="image/*" capture="camera">
                                           <label class="custom-file-label" for="file">Choose Photo</label>
                                       </div>
-                                  </div>
+                                  </div> -->
                                   </div>
                               </div>
 
@@ -76,7 +77,10 @@
         </section>
       </div>
 
+      <script type="text/javascript" src="<?=base_url('assets/')?>js/bootstrap-filestyle/src/bootstrap-filestyle.min.js"> </script>
       <script>
+      // $(":file").filestyle({text: "Find file"});
+
       function getLocation() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition);

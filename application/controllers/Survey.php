@@ -65,5 +65,12 @@ class Survey extends CI_Controller {
         redirect('survey');
     }
 
+    public function report($id)
+    {
+       $report = $this->db->get_where('report', ['store_survey_id' => $id])->row_array();
+       $file = base_url('assets/report/') . $report['file'] . '.pdf';
+       redirect($file);
+    }
+
     
 }

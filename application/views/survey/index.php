@@ -49,6 +49,9 @@
                                         <?php if($db['surveyed'] !=1 AND $db['batas_waktu']>date('Y-m-d')):?>
                                             <a href="<?=base_url('survey/delete/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-danger mr-2 tombol-hapus" title="Delete"><i class="fas fa-trash"></i></a>
                                         <?php endif?>
+                                        <?php if($db['surveyed'] ==1 AND $db['kuesioner'] ==1):?>
+                                            <a href="<?=base_url('survey/report/')?><?=$db['id']?>" class="btn btn-icon btn-sm btn-info mr-2" title="File Pdf" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                                        <?php endif?>
                                     </td>
                                 </tr>
                             <?php endforeach?>
