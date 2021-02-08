@@ -9,23 +9,13 @@
           </div>
 
           <div class="section-body">
-              <div class="row">
-                  <div class="col-sm-6">
-                      <div class="card">
-                          <div class="card-body">
-                            <div class="form-group">
-                              <label>Pilih Kategori</label>
-                              <select class="form-control select2" name='kategori_id' id='kategori_id' required>
-                              <option value="" disabled selected>Pilih Kategori</option>
-                              <?php foreach($kategori as $db):?>
-                                <option value="<?=$db['id']?>" <?=$id==$db['id']?'selected':''?>><?=$db['nama']?></option>
-                                <?php endforeach?>
-                              </select> 
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+          
+              <?php foreach($kategori as $db):?>
+                <?php if($id==$db['id']):?>
+                <h2 class="section-title">Kategori - <?=$db['nama']?></h2>
+                <?php endif?>
+                <!-- <option value="<?=$db['id']?>" <?=$id==$db['id']?'selected':''?>><?=$db['nama']?></option> -->
+              <?php endforeach?>
 
               <section id="pertanyaan">
                   

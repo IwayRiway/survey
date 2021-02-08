@@ -29,7 +29,7 @@ class Surveyshp extends CI_Controller {
       $data['store'] = $this->Survey_model->getDataStoreByRegion(); //karena masi supervisor aja
 
       $this->load->view('templates/header2');
-      $this->load->view('templates/sidebar');
+      $this->load->view('templates/sidebar2');
       $this->load->view('shp/survey/create', $data);
       $this->load->view('templates/footer');
     }
@@ -125,7 +125,7 @@ class Surveyshp extends CI_Controller {
         $data['persentase'] = $report[0]['persentase'];
         $data['detail'] = $report;
 
-        $dataEmail['email'] = 'riway.restu@gmail.com';
+        $dataEmail['email'] = ['robyngwie@gmail.com', 'riway.restu@gmail.com'];
         $dataEmail['nama'] = $data['toko'];
         $dataEmail['region'] = $data['region'];
         $dataEmail['manager'] = $data['manager'];

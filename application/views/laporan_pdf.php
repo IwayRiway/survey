@@ -35,8 +35,8 @@
                 <img src="<?=base_url('assets/img/logo.png')?>" alt="" style="max-width:90px">
             </div>
             <div style="text-align:center; margin-top: -100px; margin-left:20px;">
-                <h3>PT Mywayout By IwayRiway</h3>
-                <p>Perum Pondok Tanah Mas RT 002 RW 013 Kel. Wanasari Kec.Cibitung Bekasi</p>
+                <h3>PT d'Besto</h3>
+                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Reiciendis, hic.</p>
             </div>
         </div>
         <div class="content">

@@ -289,7 +289,7 @@
                           <tbody>
                             <tr>
                               <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                <div style="font-family:Poppins, Lato, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#ffffff;">Copyright &copy; 2021 -- Mywayout</div>
+                                <div style="font-family:Poppins, Lato, Helvetica, Arial, sans-serif;font-size:16px;line-height:1;text-align:center;color:#ffffff;">Copyright &copy; <?=date('Y')?> -- d'Besto</div>
                               </td>
                             </tr>
                           </tbody>

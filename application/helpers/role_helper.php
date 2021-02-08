@@ -36,7 +36,7 @@ function is_login2()
    if($ci->session->userdata('id')){
    } else {
       $ci->session->set_flashdata('info', 'Session Anda Telah Berakhir. SIlahkan Login Kembali');
-      redirect('spv/index');
+      redirect('index');
    }
 }
 

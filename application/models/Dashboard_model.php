@@ -96,4 +96,69 @@ class Dashboard_model extends CI_model
                                     a.region_id
                                 ")->result_array();
     }
+
+    public function getAllDataByRegion($region_id)
+    {
+        $mont = date('m');
+        return $this->db->query("SELECT a.* FROM store_survey a JOIN store b ON a.store_id = b.id WHERE MONTH(a.batas_waktu) = $mont AND b.region_id = $region_id")->num_rows();
+    }
+
+    public function getAllDataSelesaiByRegion($region_id)
+    {
+        $mont = date('m');
+        return $this->db->query("SELECT a.* FROM store_survey a JOIN store b ON a.store_id = b.id WHERE MONTH(a.batas_waktu) = $mont AND a.surveyed=1 AND a.kuesioner=1 AND b.region_id = $region_id")->num_rows();
+    }
+
+    public function getAllDataSurvey1ByRegion($region_id)
+    {
+        $mont = date('m');
+        $selesai = $this->db->query("SELECT a.* FROM store_survey a JOIN store b ON a.store_id = b.id WHERE MONTH(a.batas_waktu) = $mont AND a.surveyed=1 AND a.kuesioner=1 AND a.survey = 1 AND b.region_id = $region_id")->num_rows();
+
+        $total = $this->db->query("SELECT a.* FROM store_survey a JOIN store b ON a.store_id = b.id WHERE MONTH(a.batas_waktu) = $mont AND a.survey = 1 AND b.region_id = $region_id")->num_rows();
+
+        return ['selesai'=>$selesai, 'total'=>$total];
+    }
+
+    public function getAllDataSurvey2ByRegion($region_id)
+    {
+        $mont = date('m');
+        $selesai = $this->db->query("SELECT a.* FROM store_survey a JOIN store b ON a.store_id = b.id WHERE MONTH(a.batas_waktu) = $mont AND a.surveyed=1 AND a.kuesioner=1 AND a.survey = 2 AND b.region_id = $region_id")->num_rows();
+
+        $total = $this->db->query("SELECT a.* FROM store_survey a JOIN store b ON a.store_id = b.id WHERE MONTH(a.batas_waktu) = $mont AND a.survey = 2 AND b.region_id = $region_id")->num_rows();
+
+        return ['selesai'=>$selesai, 'total'=>$total];
+    }
+
+    public function getStoreByRegion($region_id)
+    {
+        $mont = date('m');
+        return $this->db->query("SELECT 
+                                    a.*, 
+                                    c.id as store_id, 
+                                    c.persentase 
+                                FROM 
+                                    store a 
+                                    JOIN store_survey b ON a.id = b.store_id 
+                                    JOIN report c ON b.id = c.store_survey_id 
+                                WHERE 
+                                    MONTH(b.batas_waktu) = $mont 
+                                    AND c.persentase < 80
+                                    AND a.region_id = $region_id")->result_array();
+    }
+
+    public function getDataStoreByRegion($region_id)
+    {
+        $mont = date('m');
+        return $this->db->query("SELECT 
+                                    a.*, 
+                                    c.id as store_id, 
+                                    c.persentase 
+                                FROM 
+                                    store a 
+                                    JOIN store_survey b ON a.id = b.store_id 
+                                    JOIN report c ON b.id = c.store_survey_id 
+                                WHERE 
+                                    MONTH(b.batas_waktu) = $mont
+                                    AND a.region_id = $region_id")->result_array();
+    }
 }

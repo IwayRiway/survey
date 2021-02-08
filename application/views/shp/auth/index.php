@@ -69,7 +69,7 @@
               </div>
             </div>
             <div class="simple-footer">
-              Copyright &copy; Maywayout 2021
+              Copyright &copy; d'Besto <?=date('Y')?>
             </div>
           </div>
         </div>

@@ -10,25 +10,9 @@
      <ul class="sidebar-menu">
        <li class="menu-header">Navigation</li>
 
-       <!-- <li class="<?=$side=='dashboard'?'active':''?>"><a class="nav-link" href="<?=base_url('dashboard')?>"><i class="fas fa-columns"></i><span>Dashboard</span></a></li> 
+       <li class="<?=$side=='dashboard2'?'active':''?>"><a class="nav-link" href="<?=base_url('dashboard2')?>"><i class="fas fa-columns"></i><span>Dashboard</span></a></li> 
 
-       <li class="<?=$side=='kategori'?'active':''?>"><a class="nav-link" href="<?=base_url('kategori')?>"><i class="fas fa-address-card"></i><span>Data Kategori Kuesioner</span></a></li> 
-
-       <li class="<?=$side=='kuesioner'?'active':''?>"><a class="nav-link" href="<?=base_url('kuesioner')?>"><i class="fas fa-user-tie"></i><span>Data Kuesioner</span></a></li> 
-
-       <li class="<?=$side=='region'?'active':''?>"><a class="nav-link" href="<?=base_url('region')?>"><i class="fas fa-book"></i><span>Data Region</span></a></li> 
-
-       <li class="<?=$side=='store'?'active':''?>"><a class="nav-link" href="<?=base_url('store')?>"><i class="fas fa-book"></i><span>Data Store</span></a></li> 
-
-       <li class="<?=$side=='supervisor'?'active':''?>"><a class="nav-link" href="<?=base_url('supervisor')?>"><i class="fas fa-folder"></i><span>Data Supervisor</span></a></li> 
-
-       <li class="<?=$side=='setting'?'active':''?>"><a class="nav-link" href="<?=base_url('setting')?>"><i class="fas fa-sign-out-alt"></i><span>Setting</span></a></li>  -->
-
-       <!-- <li class="<?=$side=='lembur'?'active':''?>"><a class="nav-link" href="<?=base_url('lembur')?>"><i class="fas fa-user-clock"></i><span>Data Lembur</span></a></li> 
-
-       <li class="<?=$side=='pengajuan'?'active':''?>"><a class="nav-link" href="<?=base_url('pengajuan')?>"><i class="fas fa-user-plus"></i><span>Pengajuan Karyawan</span></a></li> 
-
-       <li class="<?=$side=='menu'?'active':''?>"><a class="nav-link" href="<?=base_url('menu')?>"><i class="fas fa-cogs"></i><span>Manajemen Menu</span></a></li>  -->
+       <li class="<?=$side=='surveyshp'?'active':''?>"><a class="nav-link" href="<?=base_url('surveyshp')?>"><i class="fas fa-address-card"></i><span>Data Survey</span></a></li>
 
       
    </aside>

@@ -1,6 +1,6 @@
 <footer class="main-footer">
         <div class="footer-left">
-          Copyright &copy; 2020 <div class="bullet"></div> Develop By <a href="#">Riway Restu Islami Yudha</a>
+          Copyright &copy; <?=date('Y')?> <div class="bullet"></div> Develop By <a href="#">d'Besto</a>
         </div>
         <div class="footer-right">
           

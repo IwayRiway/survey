@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Login &mdash; HRIS</title>
+  <title>Login &mdash; Survey</title>
 
 <!-- General CSS Files -->
 <link rel="stylesheet" href="<?=base_url('assets/modules/bootstrap/css/bootstrap.min.css')?>">
@@ -65,12 +65,9 @@
 
               </div>
 
-              <div class="text-muted text-center">
-                Don't have an account? <a href="<?=base_url('auth/signup')?>">Create One</a>
-              </div>
             </div>
             <div class="simple-footer">
-              Copyright &copy; IwayRiway 2021
+              Copyright &copy; d'Besto <?=date('Y')?>
             </div>
           </div>
         </div>

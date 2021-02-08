@@ -12,7 +12,7 @@ class Index extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('auth/index');
+		$this->load->view('shp/auth/index');
     }
 
     public function login(){
@@ -34,7 +34,7 @@ class Index extends CI_Controller {
                     'is_spv' => 1,
                 ];
                 $this->session->set_userdata($data);
-                redirect('surveyshp');
+                redirect('dashboard2');
             } else {
                 $this->session->set_flashdata('gagal', 'Password Anda Salah');
                 redirect('index');
